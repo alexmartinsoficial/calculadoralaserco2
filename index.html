@@ -4,33 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Ganhos - Laser CO₂ Reversi | Fismatek</title>
-    <meta name="description" content="Descubra quanto sua clínica pode faturar com o Laser CO₂ Ultrapulsado Reversi. Condições especiais de lançamento até 26/10.">
+    <meta name="description" content="Descubra quanto sua clínica pode faturar com o Laser CO₂ Ultrapulsado Reversi. Condições especiais de lançamento até 24/10.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <!-- jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        :root {
+            --marrom-terra: #3E2C25;
+            --bege-nude: #F3E2D2;
+            --dourado-cobre: #C7A97E;
+            --branco: #FFFFFF;
+            --cinza-claro: #E8E8E8;
+        }
         
         * {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bege-nude) 0%, var(--cinza-claro) 100%);
+            color: var(--marrom-terra);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
         }
         
         /* Banner Urgência */
         .banner-urgencia {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
+            background: linear-gradient(135deg, var(--marrom-terra), #2a1f1a);
+            color: var(--bege-nude);
             padding: 1rem;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
             position: sticky;
             top: 0;
             z-index: 999;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(62, 44, 37, 0.3);
+            letter-spacing: 0.5px;
+        }
+        
+        .banner-urgencia strong {
+            color: var(--dourado-cobre);
+            text-transform: uppercase;
+            font-size: 1.1em;
         }
         
         .countdown {
@@ -41,11 +69,12 @@
         }
         
         .countdown-item {
-            background: rgba(255,255,255,0.2);
+            background: rgba(199, 169, 126, 0.2);
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             min-width: 45px;
             display: inline-block;
+            border: 1px solid var(--dourado-cobre);
         }
         
         /* Modal */
@@ -55,7 +84,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(62, 44, 37, 0.85);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -68,16 +97,17 @@
         }
         
         .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
+            background: var(--branco);
+            padding: 2.5rem;
+            border-radius: 0;
             max-width: 520px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 25px 70px rgba(62, 44, 37, 0.5);
             animation: slideUp 0.4s ease-out;
+            border: 3px solid var(--dourado-cobre);
         }
         
         @keyframes slideUp {
@@ -95,94 +125,102 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: #f3f4f6;
-            border: none;
+            background: var(--bege-nude);
+            border: 1px solid var(--dourado-cobre);
             width: 40px;
             height: 40px;
-            border-radius: 50%;
+            border-radius: 0;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #6b7280;
+            color: var(--marrom-terra);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            font-weight: 300;
         }
         
         .modal-close:hover {
-            background: #e5e7eb;
-            transform: rotate(90deg);
+            background: var(--dourado-cobre);
+            color: var(--branco);
+        }
+        
+        .modal-content h2 {
+            color: var(--marrom-terra);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.5rem;
         }
         
         .beneficios-list {
-            background: #f0fdf4;
-            border-left: 4px solid #22c55e;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 8px;
+            background: var(--bege-nude);
+            border-left: 4px solid var(--dourado-cobre);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
         }
         
         .beneficios-list p {
-            margin: 0.5rem 0;
-            color: #166534;
-            font-weight: 600;
+            margin: 0.7rem 0;
+            color: var(--marrom-terra);
+            font-weight: 500;
+            font-size: 0.95rem;
         }
         
         .urgencia-box {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
-            color: white;
-            padding: 1rem;
-            border-radius: 12px;
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
+            padding: 1.2rem;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
             margin: 1.5rem 0;
-            animation: pulse 2s infinite;
-            font-size: 1.1rem;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            border: 2px solid var(--dourado-cobre);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .form-input {
             width: 100%;
             padding: 0.875rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
+            border: 2px solid var(--cinza-claro);
+            background: var(--branco);
             margin-bottom: 1rem;
             font-size: 1rem;
             transition: all 0.2s;
+            font-family: 'Montserrat', sans-serif;
         }
         
         .form-input:focus {
             outline: none;
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            border-color: var(--dourado-cobre);
+            background: var(--bege-nude);
         }
         
         .btn-submit {
             width: 100%;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
             padding: 1rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            border: 2px solid var(--dourado-cobre);
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
         }
         
         .btn-submit:hover {
+            background: var(--dourado-cobre);
+            color: var(--marrom-terra);
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 6px 20px rgba(199, 169, 126, 0.4);
         }
         
         .disclaimer {
             font-size: 0.75rem;
-            color: #6b7280;
+            color: #666;
             text-align: center;
             margin-top: 1rem;
             line-height: 1.4;
@@ -193,24 +231,26 @@
             position: fixed;
             bottom: 25px;
             right: 25px;
-            background: #25D366;
-            color: white;
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
             padding: 14px 24px;
-            border-radius: 50px;
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 6px 20px rgba(62, 44, 37, 0.4);
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             z-index: 9998;
             transition: all 0.3s;
             font-size: 1rem;
+            border: 2px solid var(--dourado-cobre);
         }
         
         .whatsapp-float:hover {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+            background: var(--dourado-cobre);
+            color: var(--marrom-terra);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 8px 30px rgba(199, 169, 126, 0.5);
         }
         
         .whatsapp-icon {
@@ -224,14 +264,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            background: var(--branco);
+            padding: 2.5rem;
+            box-shadow: 0 25px 60px rgba(62, 44, 37, 0.4);
             z-index: 10000;
             text-align: center;
             min-width: 320px;
             display: none;
+            border: 3px solid var(--dourado-cobre);
         }
         
         .success-message.show {
@@ -245,8 +285,405 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
         }
         
+        /* Container Principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+        
+        .badge-lancamento {
+            display: inline-block;
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
+            padding: 0.5rem 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--dourado-cobre);
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            color: var(--marrom-terra);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.3rem;
+            color: var(--dourado-cobre);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .company {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+        
+        /* Card */
+        .card {
+            background: var(--branco);
+            box-shadow: 0 4px 20px rgba(62, 44, 37, 0.15);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-top: 4px solid var(--dourado-cobre);
+        }
+        
+        .card h2 {
+            color: var(--marrom-terra);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.5rem;
+        }
+        
+        /* Botões Categoria */
+        .categoria-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .categoria-btn {
+            padding: 1rem;
+            border: 2px solid var(--cinza-claro);
+            background: var(--branco);
+            color: var(--marrom-terra);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .categoria-btn:hover {
+            border-color: var(--dourado-cobre);
+        }
+        
+        .categoria-btn.active {
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
+            border-color: var(--dourado-cobre);
+            transform: scale(1.02);
+        }
+        
+        /* Exemplo Preços */
+        .exemplo-precos {
+            background: var(--bege-nude);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--dourado-cobre);
+        }
+        
+        .exemplo-precos-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .exemplo-item {
+            padding: 1rem;
+        }
+        
+        .exemplo-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            color: var(--marrom-terra);
+        }
+        
+        .exemplo-valor {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dourado-cobre);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .exemplo-desc {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+        
+        /* Tabela */
+        .tabela-container {
+            background: var(--bege-nude);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--dourado-cobre);
+            display: none;
+        }
+        
+        .tabela-container.show {
+            display: block;
+        }
+        
+        .tabela-container h3 {
+            color: var(--marrom-terra);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        
+        .tabela-container h4 {
+            color: var(--dourado-cobre);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        table {
+            width: 100%;
+            background: var(--branco);
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+        
+        thead {
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--cinza-claro);
+            font-size: 0.9rem;
+        }
+        
+        th {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+        }
+        
+        td {
+            color: var(--marrom-terra);
+        }
+        
+        tbody tr:hover {
+            background: var(--bege-nude);
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        /* Sliders */
+        .slider-container {
+            margin-bottom: 2rem;
+        }
+        
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--marrom-terra);
+        }
+        
+        .slider-value {
+            color: var(--dourado-cobre);
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: var(--bege-nude);
+            outline: none;
+            border: 1px solid var(--dourado-cobre);
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--dourado-cobre);
+            cursor: pointer;
+            border: 2px solid var(--marrom-terra);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--dourado-cobre);
+            cursor: pointer;
+            border: 2px solid var(--marrom-terra);
+        }
+        
+        .slider-markers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 0.3rem;
+        }
+        
+        /* Results Cards */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .result-card {
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(62, 44, 37, 0.3);
+            border-bottom: 4px solid var(--dourado-cobre);
+        }
+        
+        .result-card h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--dourado-cobre);
+        }
+        
+        .result-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        /* Investimento */
+        .investimento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .investimento-item {
+            background: var(--bege-nude);
+            padding: 1.5rem;
+            border-left: 4px solid var(--dourado-cobre);
+        }
+        
+        .investimento-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .investimento-valor {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--marrom-terra);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .lucro-destaque {
+            background: var(--marrom-terra);
+            color: var(--bege-nude);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 3px solid var(--dourado-cobre);
+        }
+        
+        .lucro-destaque .investimento-label {
+            color: var(--bege-nude);
+        }
+        
+        .lucro-destaque .investimento-valor {
+            color: var(--dourado-cobre);
+            font-size: 2.2rem;
+        }
+        
+        /* Breakdown */
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bege-nude);
+            margin-bottom: 0.75rem;
+            border-left: 4px solid var(--dourado-cobre);
+        }
+        
+        .breakdown-label {
+            font-weight: 600;
+            color: var(--marrom-terra);
+        }
+        
+        .breakdown-valor {
+            font-weight: 700;
+            color: var(--dourado-cobre);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        /* Buttons */
+        .btn-secondary {
+            background: var(--bege-nude);
+            color: var(--marrom-terra);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--dourado-cobre);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Montserrat', sans-serif;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--dourado-cobre);
+            color: var(--branco);
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
         /* Responsive */
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
             .countdown {
                 display: flex;
                 flex-wrap: wrap;
@@ -263,276 +700,271 @@
                 padding: 16px;
                 border-radius: 50%;
             }
+            
+            .result-value {
+                font-size: 2rem;
+            }
+            
+            .categoria-buttons {
+                gap: 0.5rem;
+            }
+            
+            .categoria-btn {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 to-blue-50">
+<body>
 
     <!-- Banner de Urgência -->
     <div class="banner-urgencia">
         <div>
-            ⚡ <strong>LANÇAMENTO REVERSI</strong> | Condições Especiais até 26/10
+            <strong>LANÇAMENTO REVERSI</strong> | Condições Especiais até 24/10/2025
             <div class="countdown" id="countdown"></div>
         </div>
     </div>
 
     <!-- Container Principal -->
-    <div class="min-h-screen p-4 sm:p-6 pb-24">
-        <div class="max-w-6xl mx-auto">
-            
-            <!-- Header -->
-            <div class="text-center mb-8 mt-6">
-                <div class="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold mb-4">
-                    🚀 LANÇAMENTO EXCLUSIVO
-                </div>
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-3">
-                    Calculadora de Ganhos
-                </h1>
-                <p class="text-xl sm:text-2xl text-purple-700 font-semibold mb-2">
-                    Laser CO₂ Ultrapulsado com Microcoring
-                </p>
-                <p class="text-lg sm:text-xl text-gray-600">
-                    Reversi - Fismatek
-                </p>
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="badge-lancamento">
+                LANÇAMENTO EXCLUSIVO
             </div>
+            <h1>Calculadora de Ganhos</h1>
+            <p class="subtitle">Laser CO₂ Ultrapulsado com Microcoring</p>
+            <p class="company">Reversi - Fismatek</p>
+        </div>
 
-            <!-- Simulador -->
-            <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 lg:p-8 mb-6">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-                    🧮 Monte sua Simulação
-                </h2>
+        <!-- Simulador -->
+        <div class="card">
+            <h2>Monte sua Simulação</h2>
 
-                <!-- Categoria -->
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-3">
-                        Selecione a categoria predominante:
-                    </label>
-                    <div class="grid grid-cols-3 gap-2 sm:gap-3">
-                        <button onclick="setCategoria('popular')" id="btn-popular" class="categoria-btn py-3 px-2 sm:px-4 rounded-lg font-semibold transition-all bg-blue-100 text-blue-700 hover:bg-blue-200 text-sm sm:text-base">
-                            Popular
-                        </button>
-                        <button onclick="setCategoria('premium')" id="btn-premium" class="categoria-btn py-3 px-2 sm:px-4 rounded-lg font-semibold transition-all bg-purple-600 text-white shadow-lg scale-105 text-sm sm:text-base">
-                            Premium
-                        </button>
-                        <button onclick="setCategoria('luxo')" id="btn-luxo" class="categoria-btn py-3 px-2 sm:px-4 rounded-lg font-semibold transition-all bg-amber-100 text-amber-700 hover:bg-amber-200 text-sm sm:text-base">
-                            Luxo
-                        </button>
-                    </div>
+            <!-- Categoria -->
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span>Selecione a categoria predominante:</span>
                 </div>
-
-                <!-- Exemplo Discreto -->
-                <div class="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <p class="text-xs text-gray-500 mb-2">Exemplos de categoria - Facial completo:</p>
-                    <div class="grid grid-cols-3 gap-2 sm:gap-3 text-center">
-                        <div>
-                            <div class="text-xs font-semibold text-blue-600 mb-1">POPULAR</div>
-                            <div class="text-base sm:text-lg font-bold text-blue-700">R$ 2.000</div>
-                        </div>
-                        <div>
-                            <div class="text-xs font-semibold text-purple-600 mb-1">PREMIUM</div>
-                            <div class="text-base sm:text-lg font-bold text-purple-700">R$ 3.000</div>
-                        </div>
-                        <div>
-                            <div class="text-xs font-semibold text-amber-600 mb-1">LUXO</div>
-                            <div class="text-base sm:text-lg font-bold text-amber-700">R$ 5.000</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Botão Tabela -->
-                <div class="mb-6 text-center">
-                    <button onclick="toggleTabela()" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-5 rounded-lg transition-all border border-gray-300">
-                        📄 <span id="btn-tabela-text">Ver</span> Tabela de Preços Completa
+                <div class="categoria-buttons">
+                    <button onclick="setCategoria('popular')" id="btn-popular" class="categoria-btn">
+                        Popular
+                    </button>
+                    <button onclick="setCategoria('premium')" id="btn-premium" class="categoria-btn active">
+                        Premium
+                    </button>
+                    <button onclick="setCategoria('luxo')" id="btn-luxo" class="categoria-btn">
+                        Luxo
                     </button>
                 </div>
+            </div>
 
-                <!-- Tabela (oculta inicialmente) -->
-                <div id="tabela-precos" class="hidden mb-6 p-4 sm:p-6 bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl border-2 border-purple-200">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Tabela de Sugestão de Preços</h3>
-                    
-                    <div class="mb-6 overflow-x-auto">
-                        <h4 class="text-lg font-bold text-purple-700 mb-3">🔹 Procedimentos Não Cirúrgicos</h4>
-                        <table class="w-full text-xs sm:text-sm bg-white rounded-lg overflow-hidden">
-                            <thead class="bg-purple-100">
+            <!-- Exemplo Discreto -->
+            <div class="exemplo-precos">
+                <p style="font-size: 0.8rem; color: #666; margin-bottom: 0.5rem;">Exemplos de categoria - Facial completo:</p>
+                <div class="exemplo-precos-grid">
+                    <div class="exemplo-item">
+                        <div class="exemplo-label">Popular</div>
+                        <div class="exemplo-valor">R$ 2.000</div>
+                        <div class="exemplo-desc">Tratamento básico e eficiente</div>
+                    </div>
+                    <div class="exemplo-item">
+                        <div class="exemplo-label">Premium</div>
+                        <div class="exemplo-valor">R$ 3.000</div>
+                        <div class="exemplo-desc">Experiência diferenciada</div>
+                    </div>
+                    <div class="exemplo-item">
+                        <div class="exemplo-label">Luxo</div>
+                        <div class="exemplo-valor">R$ 5.000</div>
+                        <div class="exemplo-desc">Excelência e exclusividade</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão Tabela -->
+            <div class="text-center" style="margin-bottom: 2rem;">
+                <button onclick="toggleTabela()" class="btn-secondary">
+                    <span id="btn-tabela-text">Ver</span> Tabela de Preços Completa
+                </button>
+            </div>
+
+            <!-- Tabela (oculta inicialmente) -->
+            <div id="tabela-precos" class="tabela-container">
+                <h3>Tabela de Sugestão de Preços</h3>
+                
+                <div>
+                    <h4>Procedimentos Não Cirúrgicos (Estéticos)</h4>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <th class="text-left p-2 sm:p-3 font-semibold">Protocolo</th>
-                                    <th class="text-right p-2 sm:p-3 font-semibold">Popular</th>
-                                    <th class="text-right p-2 sm:p-3 font-semibold">Premium</th>
-                                    <th class="text-right p-2 sm:p-3 font-semibold">Luxo</th>
+                                    <th>Protocolo</th>
+                                    <th class="text-right">Popular</th>
+                                    <th class="text-right">Premium</th>
+                                    <th class="text-right">Luxo</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y">
-                                <tr><td class="p-2 sm:p-3">Área da boca</td><td class="text-right p-2 sm:p-3">R$ 900</td><td class="text-right p-2 sm:p-3">R$ 1.200</td><td class="text-right p-2 sm:p-3">R$ 1.600</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Pescoço</td><td class="text-right p-2 sm:p-3">R$ 1.000</td><td class="text-right p-2 sm:p-3">R$ 2.500</td><td class="text-right p-2 sm:p-3">R$ 4.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Mãos</td><td class="text-right p-2 sm:p-3">R$ 1.100</td><td class="text-right p-2 sm:p-3">R$ 1.500</td><td class="text-right p-2 sm:p-3">R$ 1.900</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Colo</td><td class="text-right p-2 sm:p-3">R$ 1.500</td><td class="text-right p-2 sm:p-3">R$ 1.900</td><td class="text-right p-2 sm:p-3">R$ 2.300</td></tr>
-                                <tr><td class="p-2 sm:p-3">Bumbum de Pêssego</td><td class="text-right p-2 sm:p-3">R$ 1.700</td><td class="text-right p-2 sm:p-3">R$ 2.300</td><td class="text-right p-2 sm:p-3">R$ 3.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Olhar Diamante</td><td class="text-right p-2 sm:p-3">R$ 1.800</td><td class="text-right p-2 sm:p-3">R$ 2.500</td><td class="text-right p-2 sm:p-3">R$ 5.000</td></tr>
-                                <tr><td class="p-2 sm:p-3 font-semibold">Face Sublime</td><td class="text-right p-2 sm:p-3 font-semibold">R$ 2.000</td><td class="text-right p-2 sm:p-3 font-semibold">R$ 3.000</td><td class="text-right p-2 sm:p-3 font-semibold">R$ 5.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Lift Premium</td><td class="text-right p-2 sm:p-3">R$ 3.000</td><td class="text-right p-2 sm:p-3">R$ 5.500</td><td class="text-right p-2 sm:p-3">R$ 8.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Elegance Total</td><td class="text-right p-2 sm:p-3">R$ 4.000</td><td class="text-right p-2 sm:p-3">R$ 7.000</td><td class="text-right p-2 sm:p-3">R$ 10.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Skin Perfect</td><td class="text-right p-2 sm:p-3">R$ 4.200</td><td class="text-right p-2 sm:p-3">R$ 7.000</td><td class="text-right p-2 sm:p-3">R$ 10.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Abdômen Platinum</td><td class="text-right p-2 sm:p-3">R$ 4.000</td><td class="text-right p-2 sm:p-3">R$ 6.000</td><td class="text-right p-2 sm:p-3">R$ 12.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3 font-semibold">Resurfacing</td><td class="text-right p-2 sm:p-3 font-semibold">R$ 5.000</td><td class="text-right p-2 sm:p-3 font-semibold">R$ 7.000</td><td class="text-right p-2 sm:p-3 font-semibold">R$ 10.000</td></tr>
+                            <tbody>
+                                <tr><td>Área da boca</td><td class="text-right">R$ 900</td><td class="text-right">R$ 1.200</td><td class="text-right">R$ 1.600</td></tr>
+                                <tr><td>Pescoço</td><td class="text-right">R$ 1.000</td><td class="text-right">R$ 2.500</td><td class="text-right">R$ 4.000</td></tr>
+                                <tr><td>Mãos</td><td class="text-right">R$ 1.100</td><td class="text-right">R$ 1.500</td><td class="text-right">R$ 1.900</td></tr>
+                                <tr><td>Colo</td><td class="text-right">R$ 1.500</td><td class="text-right">R$ 1.900</td><td class="text-right">R$ 2.300</td></tr>
+                                <tr><td>Bumbum de Pêssego</td><td class="text-right">R$ 1.700</td><td class="text-right">R$ 2.300</td><td class="text-right">R$ 3.000</td></tr>
+                                <tr><td>Olhar Diamante</td><td class="text-right">R$ 1.800</td><td class="text-right">R$ 2.500</td><td class="text-right">R$ 5.000</td></tr>
+                                <tr><td><strong>Face Sublime (Facial completo)</strong></td><td class="text-right"><strong>R$ 2.000</strong></td><td class="text-right"><strong>R$ 3.000</strong></td><td class="text-right"><strong>R$ 5.000</strong></td></tr>
+                                <tr><td>Lift Premium (Face + pescoço)</td><td class="text-right">R$ 3.000</td><td class="text-right">R$ 5.500</td><td class="text-right">R$ 8.000</td></tr>
+                                <tr><td>Elegance Total (Face + pescoço + colo)</td><td class="text-right">R$ 4.000</td><td class="text-right">R$ 7.000</td><td class="text-right">R$ 10.000</td></tr>
+                                <tr><td>Skin Perfect (Cicatrizes e estrias)</td><td class="text-right">R$ 4.200</td><td class="text-right">R$ 7.000</td><td class="text-right">R$ 10.000</td></tr>
+                                <tr><td>Abdômen Platinum</td><td class="text-right">R$ 4.000</td><td class="text-right">R$ 6.000</td><td class="text-right">R$ 12.000</td></tr>
+                                <tr><td><strong>Resurfacing (Laser facial profundo)</strong></td><td class="text-right"><strong>R$ 5.000</strong></td><td class="text-right"><strong>R$ 7.000</strong></td><td class="text-right"><strong>R$ 10.000</strong></td></tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
 
-                    <div class="overflow-x-auto">
-                        <h4 class="text-lg font-bold text-blue-700 mb-3">🔹 Procedimentos Cirúrgicos</h4>
-                        <table class="w-full text-xs sm:text-sm bg-white rounded-lg overflow-hidden">
-                            <thead class="bg-blue-100">
+                <div>
+                    <h4>Procedimentos Cirúrgicos</h4>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
                                 <tr>
-                                    <th class="text-left p-2 sm:p-3 font-semibold">Procedimento</th>
-                                    <th class="text-right p-2 sm:p-3 font-semibold">Popular</th>
-                                    <th class="text-right p-2 sm:p-3 font-semibold">Premium</th>
-                                    <th class="text-right p-2 sm:p-3 font-semibold">Luxo</th>
+                                    <th>Procedimento</th>
+                                    <th class="text-right">Popular</th>
+                                    <th class="text-right">Premium</th>
+                                    <th class="text-right">Luxo</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y">
-                                <tr><td class="p-2 sm:p-3">Lesões benignas pequenas</td><td class="text-right p-2 sm:p-3">R$ 800</td><td class="text-right p-2 sm:p-3">R$ 1.500</td><td class="text-right p-2 sm:p-3">R$ 2.500</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Ressecção de pintas</td><td class="text-right p-2 sm:p-3">R$ 800</td><td class="text-right p-2 sm:p-3">R$ 1.200</td><td class="text-right p-2 sm:p-3">R$ 2.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Siringomas e mílias</td><td class="text-right p-2 sm:p-3">R$ 1.500</td><td class="text-right p-2 sm:p-3">R$ 2.000</td><td class="text-right p-2 sm:p-3">R$ 3.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Exérese de xantelasmas</td><td class="text-right p-2 sm:p-3">R$ 2.500</td><td class="text-right p-2 sm:p-3">R$ 4.000</td><td class="text-right p-2 sm:p-3">R$ 6.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Excisão de cicatrizes</td><td class="text-right p-2 sm:p-3">R$ 2.500</td><td class="text-right p-2 sm:p-3">R$ 4.000</td><td class="text-right p-2 sm:p-3">R$ 6.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Vaporização de quelóides</td><td class="text-right p-2 sm:p-3">R$ 2.500</td><td class="text-right p-2 sm:p-3">R$ 4.000</td><td class="text-right p-2 sm:p-3">R$ 6.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Laser intravaginal</td><td class="text-right p-2 sm:p-3">R$ 5.000</td><td class="text-right p-2 sm:p-3">R$ 8.000</td><td class="text-right p-2 sm:p-3">R$ 12.000</td></tr>
-                                <tr class="bg-gray-50"><td class="p-2 sm:p-3">Blefaroplastia</td><td class="text-right p-2 sm:p-3">R$ 6.000</td><td class="text-right p-2 sm:p-3">R$ 8.500</td><td class="text-right p-2 sm:p-3">R$ 12.000</td></tr>
-                                <tr><td class="p-2 sm:p-3">Ninfoplastia</td><td class="text-right p-2 sm:p-3">R$ 8.000</td><td class="text-right p-2 sm:p-3">R$ 12.000</td><td class="text-right p-2 sm:p-3">R$ 20.000</td></tr>
+                            <tbody>
+                                <tr><td>Tratamento de lesões benignas pequenas</td><td class="text-right">R$ 800</td><td class="text-right">R$ 1.500</td><td class="text-right">R$ 2.500</td></tr>
+                                <tr><td>Ressecção de pintas / manchas elevadas</td><td class="text-right">R$ 800</td><td class="text-right">R$ 1.200</td><td class="text-right">R$ 2.000</td></tr>
+                                <tr><td>Remoção de siringomas, mílias e cistos faciais</td><td class="text-right">R$ 1.500</td><td class="text-right">R$ 2.000</td><td class="text-right">R$ 3.000</td></tr>
+                                <tr><td>Exérese de xantelasmas</td><td class="text-right">R$ 2.500</td><td class="text-right">R$ 4.000</td><td class="text-right">R$ 6.000</td></tr>
+                                <tr><td>Excisão de cicatrizes inestéticas</td><td class="text-right">R$ 2.500</td><td class="text-right">R$ 4.000</td><td class="text-right">R$ 6.000</td></tr>
+                                <tr><td>Vaporização de quelóides / cicatrizes hipertróficas</td><td class="text-right">R$ 2.500</td><td class="text-right">R$ 4.000</td><td class="text-right">R$ 6.000</td></tr>
+                                <tr><td>Laser de CO₂ intravaginal / rejuvenescimento íntimo</td><td class="text-right">R$ 5.000</td><td class="text-right">R$ 8.000</td><td class="text-right">R$ 12.000</td></tr>
+                                <tr><td>Blefaroplastia</td><td class="text-right">R$ 6.000</td><td class="text-right">R$ 8.500</td><td class="text-right">R$ 12.000</td></tr>
+                                <tr><td>Ninfoplastia (cirurgia íntima feminina)</td><td class="text-right">R$ 8.000</td><td class="text-right">R$ 12.000</td><td class="text-right">R$ 20.000</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
+            </div>
 
-                <!-- Procedimentos por mês -->
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">
-                        Quantidade de procedimentos por mês: <span class="text-purple-600 text-lg" id="label-procedimentos">20</span>
-                    </label>
-                    <input type="range" id="slider-procedimentos" min="5" max="100" value="20" class="w-full h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer">
-                    <div class="flex justify-between text-xs text-gray-500 mt-1">
-                        <span>5 proc.</span>
-                        <span>50 proc.</span>
-                        <span>100 proc.</span>
-                    </div>
+            <!-- Procedimentos por mês -->
+            <div class="slider-container">
+                <div class="slider-label">
+                    <span>Quantidade de procedimentos por mês:</span>
+                    <span class="slider-value" id="label-procedimentos">20</span>
                 </div>
-
-                <!-- Mix de procedimentos -->
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-700 mb-3">
-                        Distribuição dos procedimentos (%):
-                    </label>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">Facial completo e similares</span>
-                                <span class="text-sm font-semibold text-purple-600" id="label-face">40%</span>
-                            </div>
-                            <input type="range" id="slider-face" min="0" max="100" value="40" class="w-full h-2 bg-purple-200 rounded-lg appearance-none cursor-pointer">
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">Procedimentos cirúrgicos</span>
-                                <span class="text-sm font-semibold text-blue-600" id="label-cirurgicos">30%</span>
-                            </div>
-                            <input type="range" id="slider-cirurgicos" min="0" max="100" value="30" class="w-full h-2 bg-blue-200 rounded-lg appearance-none cursor-pointer">
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm text-gray-600">Outros procedimentos</span>
-                                <span class="text-sm font-semibold text-green-600" id="label-outros">30%</span>
-                            </div>
-                            <div class="w-full h-2 bg-green-200 rounded-lg"></div>
-                        </div>
-                    </div>
+                <input type="range" id="slider-procedimentos" min="5" max="100" value="20">
+                <div class="slider-markers">
+                    <span>5 proc.</span>
+                    <span>50 proc.</span>
+                    <span>100 proc.</span>
                 </div>
             </div>
 
-            <!-- Resultados -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6">
-                <div class="bg-gradient-to-br from-purple-600 to-purple-700 rounded-2xl shadow-lg p-4 sm:p-6 text-white">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-2xl">📅</span>
-                        <h3 class="text-base sm:text-lg font-semibold">Faturamento Mensal</h3>
-                    </div>
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" id="result-mensal">R$ 0</div>
-                    <div class="text-purple-200 text-xs sm:text-sm" id="result-mensal-desc">
-                        Baseado em 20 procedimentos/mês
-                    </div>
+            <!-- Mix de procedimentos -->
+            <div class="slider-container">
+                <div class="slider-label" style="margin-bottom: 1rem;">
+                    <span>Distribuição dos procedimentos (%):</span>
                 </div>
-
-                <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-lg p-4 sm:p-6 text-white">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-2xl">📈</span>
-                        <h3 class="text-base sm:text-lg font-semibold">Projeção Anual</h3>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <div class="slider-label">
+                        <span>Facial completo e similares</span>
+                        <span class="slider-value" id="label-face">40%</span>
                     </div>
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" id="result-anual">R$ 0</div>
-                    <div class="text-amber-200 text-xs sm:text-sm">
-                        Potencial de faturamento em 12 meses
-                    </div>
+                    <input type="range" id="slider-face" min="0" max="100" value="40">
                 </div>
-
-                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg p-4 sm:p-6 text-white">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-2xl">💰</span>
-                        <h3 class="text-base sm:text-lg font-semibold">ROI Estimado</h3>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <div class="slider-label">
+                        <span>Procedimentos cirúrgicos</span>
+                        <span class="slider-value" id="label-cirurgicos">30%</span>
                     </div>
-                    <div class="text-3xl sm:text-4xl font-bold mb-2" id="result-roi">0 meses</div>
-                    <div class="text-green-200 text-xs sm:text-sm">
-                        Tempo para retorno do investimento
+                    <input type="range" id="slider-cirurgicos" min="0" max="100" value="30">
+                </div>
+                
+                <div>
+                    <div class="slider-label">
+                        <span>Outros procedimentos</span>
+                        <span class="slider-value" id="label-outros">30%</span>
                     </div>
+                    <div style="height: 6px; background: var(--bege-nude); border: 1px solid var(--dourado-cobre);"></div>
                 </div>
             </div>
-
-            <!-- Info do Investimento -->
-            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">💰 Informações do Investimento</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <div class="text-sm text-gray-600 mb-1">Valor do Aparelho</div>
-                        <div class="text-xl sm:text-2xl font-bold text-gray-800">R$ 229.900</div>
-                    </div>
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <div class="text-sm text-gray-600 mb-1">Entrada</div>
-                        <div class="text-xl sm:text-2xl font-bold text-gray-800">R$ 10.000</div>
-                    </div>
-                    <div class="p-4 bg-gray-50 rounded-lg">
-                        <div class="text-sm text-gray-600 mb-1">Parcela Mensal (36x)</div>
-                        <div class="text-xl sm:text-2xl font-bold text-gray-800">R$ 6.108</div>
-                    </div>
-                </div>
-                <div class="mt-4 p-4 bg-green-50 rounded-lg border-2 border-green-200">
-                    <div class="text-sm font-semibold text-green-700 mb-1">Lucro Líquido Mensal (após parcela)</div>
-                    <div class="text-2xl sm:text-3xl font-bold text-green-700" id="result-lucro">R$ 0</div>
-                </div>
-            </div>
-
-            <!-- Breakdown -->
-            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-4">📊 Detalhamento por Tipo</h3>
-                <div class="space-y-3">
-                    <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
-                        <span class="font-semibold text-gray-700 text-sm sm:text-base">Facial completo e similares</span>
-                        <span class="text-purple-700 font-bold text-sm sm:text-base" id="breakdown-face">R$ 0/mês</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                        <span class="font-semibold text-gray-700 text-sm sm:text-base">Procedimentos cirúrgicos</span>
-                        <span class="text-blue-700 font-bold text-sm sm:text-base" id="breakdown-cirurgicos">R$ 0/mês</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                        <span class="font-semibold text-gray-700 text-sm sm:text-base">Outros procedimentos</span>
-                        <span class="text-green-700 font-bold text-sm sm:text-base" id="breakdown-outros">R$ 0/mês</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="text-center mt-8 text-gray-600 text-xs sm:text-sm space-y-1">
-                <p>* Valores estimados baseados na tabela de preços sugerida</p>
-                <p>Os resultados reais podem variar conforme demanda e mix de procedimentos</p>
-            </div>
-
         </div>
+
+        <!-- Resultados -->
+        <div class="results-grid">
+            <div class="result-card">
+                <h3>Faturamento Mensal</h3>
+                <div class="result-value" id="result-mensal">R$ 0</div>
+                <div class="result-desc" id="result-mensal-desc">Baseado em 20 procedimentos/mês</div>
+            </div>
+
+            <div class="result-card">
+                <h3>Projeção Anual</h3>
+                <div class="result-value" id="result-anual">R$ 0</div>
+                <div class="result-desc">Potencial de faturamento em 12 meses</div>
+            </div>
+
+            <div class="result-card">
+                <h3>ROI Estimado</h3>
+                <div class="result-value" id="result-roi">0 meses</div>
+                <div class="result-desc">Tempo para retorno do investimento</div>
+            </div>
+        </div>
+
+        <!-- Info do Investimento -->
+        <div class="card">
+            <h2>Informações do Investimento</h2>
+            <div class="investimento-grid">
+                <div class="investimento-item">
+                    <div class="investimento-label">Valor do Aparelho</div>
+                    <div class="investimento-valor">R$ 229.900</div>
+                </div>
+                <div class="investimento-item">
+                    <div class="investimento-label">Entrada</div>
+                    <div class="investimento-valor">R$ 10.000</div>
+                </div>
+                <div class="investimento-item">
+                    <div class="investimento-label">Parcela Mensal (36x)</div>
+                    <div class="investimento-valor">R$ 6.108</div>
+                </div>
+            </div>
+            <div class="lucro-destaque">
+                <div class="investimento-label">Lucro Líquido Mensal (após parcela)</div>
+                <div class="investimento-valor" id="result-lucro">R$ 0</div>
+            </div>
+        </div>
+
+        <!-- Breakdown -->
+        <div class="card">
+            <h2>Detalhamento por Tipo</h2>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Facial completo e similares</span>
+                <span class="breakdown-valor" id="breakdown-face">R$ 0/mês</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Procedimentos cirúrgicos</span>
+                <span class="breakdown-valor" id="breakdown-cirurgicos">R$ 0/mês</span>
+            </div>
+            <div class="breakdown-item">
+                <span class="breakdown-label">Outros procedimentos</span>
+                <span class="breakdown-valor" id="breakdown-outros">R$ 0/mês</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>* Valores estimados baseados na tabela de preços sugerida</p>
+            <p>Os resultados reais podem variar conforme demanda e mix de procedimentos</p>
+        </div>
+
     </div>
 
     <!-- Modal de Captura -->
@@ -540,25 +972,20 @@
         <div class="modal-content">
             <button id="closeModal" class="modal-close">×</button>
             
-            <div class="text-center mb-4">
-                <div class="text-5xl mb-3">🌟</div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">
-                    Receba Seu Plano de Faturamento Personalizado
-                </h2>
-                <p class="text-gray-600">
-                    PDF completo com análise detalhada da sua simulação
-                </p>
+            <div class="text-center" style="margin-bottom: 1.5rem;">
+                <h2>Receba Seu Plano de Faturamento Personalizado</h2>
+                <p style="color: #666; margin-top: 0.5rem;">PDF completo com análise detalhada da sua simulação</p>
             </div>
             
             <div class="beneficios-list">
-                <p>✓ Cronograma detalhado de ROI mês a mês</p>
-                <p>✓ Plano de ação para os primeiros 90 dias</p>
-                <p>✓ Comparativo de 3 cenários diferentes</p>
-                <p>✓ Tabela completa de precificação estratégica</p>
+                <p>• Cronograma detalhado de ROI mês a mês</p>
+                <p>• Plano de ação para os primeiros 90 dias</p>
+                <p>• Comparativo de 3 cenários diferentes</p>
+                <p>• Tabela completa de precificação estratégica</p>
             </div>
             
             <div class="urgencia-box">
-                ⏰ Condição Especial de Lançamento válida até 26/10
+                Condição Especial de Lançamento válida até 24/10/2025
             </div>
             
             <form name="captura-reversi" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="formCaptura">
@@ -576,13 +1003,13 @@
                 <input type="tel" name="whatsapp" placeholder="WhatsApp (com DDD) *" required class="form-input" pattern="[0-9]{10,11}">
                 <input type="text" name="cidade" placeholder="Cidade/Estado *" required class="form-input">
                 
-                <label class="flex items-center gap-2 mb-4 cursor-pointer">
-                    <input type="checkbox" name="temClinica" value="sim" class="w-5 h-5">
-                    <span class="text-sm text-gray-700">Já possuo clínica estabelecida</span>
+                <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; cursor: pointer; font-size: 0.9rem;">
+                    <input type="checkbox" name="temClinica" value="sim" style="width: 18px; height: 18px;">
+                    <span>Já possuo clínica estabelecida</span>
                 </label>
                 
                 <button type="submit" class="btn-submit">
-                    📄 Receber Plano Personalizado em PDF
+                    Receber Plano Personalizado em PDF
                 </button>
             </form>
             
@@ -594,10 +1021,10 @@
 
     <!-- Success Message -->
     <div id="successMessage" class="success-message">
-        <div class="text-6xl mb-4">✅</div>
-        <h3 class="text-2xl font-bold text-gray-800 mb-2">PDF Gerado com Sucesso!</h3>
-        <p class="text-gray-600 mb-4">Verifique sua pasta de downloads</p>
-        <p class="text-sm text-gray-500">Redirecionando para WhatsApp...</p>
+        <div style="font-size: 4rem; margin-bottom: 1rem; color: var(--dourado-cobre);">✓</div>
+        <h3 style="color: var(--marrom-terra); margin-bottom: 0.5rem; font-size: 1.5rem;">PDF Gerado com Sucesso!</h3>
+        <p style="color: #666; margin-bottom: 1rem;">Verifique sua pasta de downloads</p>
+        <p style="font-size: 0.85rem; color: #999;">Redirecionando para WhatsApp...</p>
     </div>
 
     <!-- WhatsApp Float Button -->
@@ -715,24 +1142,10 @@
             state.categoria = cat;
             
             document.querySelectorAll('.categoria-btn').forEach(btn => {
-                btn.className = 'categoria-btn py-3 px-2 sm:px-4 rounded-lg font-semibold transition-all text-sm sm:text-base';
+                btn.classList.remove('active');
             });
             
-            const cores = {
-                popular: 'bg-blue-600 text-white shadow-lg scale-105',
-                premium: 'bg-purple-600 text-white shadow-lg scale-105',
-                luxo: 'bg-amber-600 text-white shadow-lg scale-105'
-            };
-            
-            const coresInativas = {
-                popular: 'bg-blue-100 text-blue-700 hover:bg-blue-200',
-                premium: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
-                luxo: 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-            };
-            
-            document.getElementById('btn-popular').className += ' ' + (cat === 'popular' ? cores.popular : coresInativas.popular);
-            document.getElementById('btn-premium').className += ' ' + (cat === 'premium' ? cores.premium : coresInativas.premium);
-            document.getElementById('btn-luxo').className += ' ' + (cat === 'luxo' ? cores.luxo : coresInativas.luxo);
+            document.getElementById('btn-' + cat).classList.add('active');
             
             atualizarResultados();
         }
@@ -744,23 +1157,23 @@
             const btnText = document.getElementById('btn-tabela-text');
             
             if (state.mostrarTabela) {
-                tabela.classList.remove('hidden');
+                tabela.classList.add('show');
                 btnText.textContent = 'Ocultar';
             } else {
-                tabela.classList.add('hidden');
+                tabela.classList.remove('show');
                 btnText.textContent = 'Ver';
             }
         }
 
         // Slider Procedimentos
-        document.getElementById('slider-procedimentos').addEventListener('input', (e) => {
+        document.getElementById('slider-procedimentos').addEventListener('input', function(e) {
             state.procedimentosMes = Number(e.target.value);
             document.getElementById('label-procedimentos').textContent = state.procedimentosMes;
             atualizarResultados();
         });
 
         // Slider Face
-        document.getElementById('slider-face').addEventListener('input', (e) => {
+        document.getElementById('slider-face').addEventListener('input', function(e) {
             const valor = Number(e.target.value);
             const resto = 100 - valor;
             state.mixProcedimentos = {
@@ -775,7 +1188,7 @@
         });
 
         // Slider Cirúrgicos
-        document.getElementById('slider-cirurgicos').addEventListener('input', (e) => {
+        document.getElementById('slider-cirurgicos').addEventListener('input', function(e) {
             const valor = Number(e.target.value);
             const resto = 100 - valor;
             state.mixProcedimentos = {
@@ -792,14 +1205,14 @@
 
         // Countdown
         function iniciarContador() {
-            const dataLimite = new Date('2024-10-26T23:59:59').getTime();
+            const dataLimite = new Date('2025-10-24T23:59:59').getTime();
             
-            setInterval(() => {
+            setInterval(function() {
                 const agora = new Date().getTime();
                 const diferenca = dataLimite - agora;
                 
                 if (diferenca < 0) {
-                    document.getElementById('countdown').innerHTML = '<span class="text-yellow-300">OFERTA ENCERRADA</span>';
+                    document.getElementById('countdown').innerHTML = '<span style="color: var(--dourado-cobre);">OFERTA ENCERRADA</span>';
                     return;
                 }
                 
@@ -808,12 +1221,11 @@
                 const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
                 const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
                 
-                document.getElementById('countdown').innerHTML = `
-                    <span class="countdown-item">${dias}d</span>
-                    <span class="countdown-item">${horas}h</span>
-                    <span class="countdown-item">${minutos}m</span>
-                    <span class="countdown-item">${segundos}s</span>
-                `;
+                document.getElementById('countdown').innerHTML = 
+                    '<span class="countdown-item">' + dias + 'd</span>' +
+                    '<span class="countdown-item">' + horas + 'h</span>' +
+                    '<span class="countdown-item">' + minutos + 'm</span>' +
+                    '<span class="countdown-item">' + segundos + 's</span>';
             }, 1000);
         }
 
@@ -826,7 +1238,7 @@
             const roiMeses = faturamento.roi.mesesParaROI;
             
             if (roiMeses > 0 && roiMeses < 15) {
-                setTimeout(() => {
+                setTimeout(function() {
                     document.getElementById('modalCaptura').classList.remove('hidden');
                     modalJaMostrado = true;
                 }, 5000);
@@ -834,19 +1246,19 @@
         }
 
         // Fechar modal
-        document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('closeModal').addEventListener('click', function() {
             document.getElementById('modalCaptura').classList.add('hidden');
         });
 
         // Click fora do modal
-        document.getElementById('modalCaptura').addEventListener('click', (e) => {
+        document.getElementById('modalCaptura').addEventListener('click', function(e) {
             if (e.target.id === 'modalCaptura') {
                 document.getElementById('modalCaptura').classList.add('hidden');
             }
         });
 
         // Submit form
-        document.getElementById('formCaptura').addEventListener('submit', async (e) => {
+        document.getElementById('formCaptura').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const formData = new FormData(e.target);
@@ -890,468 +1302,193 @@
             });
             
             // Redirecionar para WhatsApp após 3 segundos
-            setTimeout(() => {
-                const mensagem = `Olá! Acabei de baixar meu Plano de Faturamento Reversi. Gostaria de mais informações sobre a condição de lançamento (válida até 26/10).`;
-                window.open(`https://wa.me/5562983160209?text=${encodeURIComponent(mensagem)}`, '_blank');
+            setTimeout(function() {
+                const mensagem = 'Olá! Acabei de baixar meu Plano de Faturamento Reversi. Gostaria de mais informações sobre a condição de lançamento (válida até 24/10/2025).';
+                window.open('https://wa.me/5562983160209?text=' + encodeURIComponent(mensagem), '_blank');
                 successMsg.classList.remove('show');
             }, 3000);
         });
 
-        // Gerar PDF
+        // Gerar PDF (SEM spread operator, compatível com todos navegadores)
         async function gerarPDF(dados) {
-            const { jsPDF } = window.jspdf;
+            const jsPDF = window.jspdf.jsPDF;
             const pdf = new jsPDF();
             
             const faturamento = dados.simulacao.faturamento;
             const roiMeses = Math.ceil(faturamento.roi.mesesParaROI);
             
             // Página 1 - Capa
-            pdf.setFillColor(139, 92, 246);
+            pdf.setFillColor(62, 44, 37);
             pdf.rect(0, 0, 210, 297, 'F');
             
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFontSize(32);
-            pdf.setFont(undefined, 'bold');
+            pdf.setTextColor(243, 226, 210);
+            pdf.setFont('times', 'bold');
+            pdf.setFontSize(28);
             pdf.text('PLANO DE FATURAMENTO', 105, 80, { align: 'center' });
             pdf.text('PERSONALIZADO', 105, 95, { align: 'center' });
             
-            pdf.setFontSize(20);
-            pdf.text(`${dados.nome}`, 105, 120, { align: 'center' });
-            
-            pdf.setFontSize(16);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Laser CO₂ Ultrapulsado com Microcoring', 105, 140, { align: 'center' });
-            pdf.text('Reversi - Fismatek', 105, 150, { align: 'center' });
+            pdf.setFontSize(18);
+            pdf.text(dados.nome, 105, 120, { align: 'center' });
             
             pdf.setFontSize(14);
-            pdf.text(`Simulação gerada em: ${new Date().toLocaleDateString('pt-BR')}`, 105, 180, { align: 'center' });
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Laser CO2 Ultrapulsado com Microcoring', 105, 140, { align: 'center' });
+            pdf.text('Reversi - Fismatek', 105, 150, { align: 'center' });
             
-            pdf.setFillColor(255, 107, 107);
-            pdf.roundedRect(30, 200, 150, 30, 5, 5, 'F');
-            pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('⚡ Condição Especial até 26/10/2024', 105, 218, { align: 'center' });
+            pdf.setFontSize(12);
+            pdf.text('Simulacao gerada em: ' + new Date().toLocaleDateString('pt-BR'), 105, 170, { align: 'center' });
+            
+            // Box condição especial
+            pdf.setFillColor(199, 169, 126);
+            pdf.rect(30, 190, 150, 25, 'F');
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(14);
+            pdf.setFont('helvetica', 'bold');
+            pdf.text('CONDICAO ESPECIAL DE LANCAMENTO', 105, 200, { align: 'center' });
+            pdf.setFontSize(12);
+            pdf.text('Valida ate 24/10/2025', 105, 208, { align: 'center' });
             
             // Página 2 - Resumo Executivo
             pdf.addPage();
             pdf.setFillColor(255, 255, 255);
             pdf.rect(0, 0, 210, 297, 'F');
             
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('Seu Potencial de Faturamento', 20, 30);
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(22);
+            pdf.setFont('times', 'bold');
+            pdf.text('SEU POTENCIAL DE FATURAMENTO', 20, 30);
             
+            // Linha decorativa
+            pdf.setDrawColor(199, 169, 126);
+            pdf.setLineWidth(2);
+            pdf.line(20, 35, 80, 35);
+            
+            pdf.setFontSize(11);
+            pdf.setFont('helvetica', 'bold');
+            pdf.text('DADOS DA SUA SIMULACAO', 20, 50);
+            
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Categoria: ' + state.categoria.toUpperCase(), 25, 58);
+            pdf.text('Procedimentos mensais: ' + state.procedimentosMes, 25, 65);
+            const mixText = 'Mix: ' + state.mixProcedimentos.faceSublime + '% Facial | ' + state.mixProcedimentos.cirurgicos + '% Cirurgicos | ' + state.mixProcedimentos.outros + '% Outros';
+            pdf.text(mixText, 25, 72);
+            
+            // Resultados
             pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Dados da sua simulação:', 20, 50);
-            pdf.text(`• Categoria: ${state.categoria.toUpperCase()}`, 30, 60);
-            pdf.text(`• Procedimentos mensais: ${state.procedimentosMes}`, 30, 68);
-            pdf.text(`• Mix: ${state.mixProcedimentos.faceSublime}% Facial | ${state.mixProcedimentos.cirurgicos}% Cirúrgicos | ${state.mixProcedimentos.outros}% Outros`, 30, 76);
+            pdf.setFont('helvetica', 'bold');
+            pdf.text('SEUS RESULTADOS PROJETADOS', 20, 90);
             
-            // Resultados em destaque
-            pdf.setFontSize(14);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🎯 Seus Resultados Projetados:', 20, 95);
+            // Box com resultados
+            pdf.setFillColor(243, 226, 210);
+            pdf.rect(20, 95, 170, 85, 'F');
+            pdf.setDrawColor(199, 169, 126);
+            pdf.setLineWidth(1);
+            pdf.rect(20, 95, 170, 85, 'S');
             
-            pdf.setFillColor(243, 244, 246);
-            pdf.roundedRect(20, 100, 170, 80, 3, 3, 'F');
-            
-            pdf.setFontSize(11);
-            pdf.text('Faturamento Mensal:', 30, 115);
-            pdf.setFontSize(18);
-            pdf.setTextColor(139, 92, 246);
-            pdf.text(formatarMoeda(faturamento.mensal), 30, 125);
-            
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(11);
-            pdf.text('Faturamento Anual:', 30, 140);
-            pdf.setFontSize(18);
-            pdf.setTextColor(245, 158, 11);
-            pdf.text(formatarMoeda(faturamento.anual), 30, 150);
-            
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(11);
-            pdf.text('Lucro Líquido Mensal:', 30, 165);
-            pdf.setFontSize(18);
-            pdf.setTextColor(34, 197, 94);
-            pdf.text(formatarMoeda(faturamento.roi.lucroMensal), 30, 175);
-            
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(11);
-            pdf.text('ROI (Retorno):', 120, 115);
-            pdf.setFontSize(24);
-            pdf.setTextColor(220, 38, 38);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`${roiMeses} meses`, 120, 130);
-            
-            // Análise
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(11);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('🏆 Análise:', 20, 195);
-            const analise = `Com base na sua simulação, seu investimento se paga em menos de ${roiMeses <= 12 ? '1 ano' : Math.ceil(roiMeses/12) + ' anos'}, gerando um lucro líquido superior a ${formatarMoeda(faturamento.roi.lucroMensal * 12)} no primeiro ano.`;
-            const splitAnalise = pdf.splitTextToSize(analise, 170);
-            pdf.text(splitAnalise, 20, 205);
-            
-            // Página 3 - Investimento
-            pdf.addPage();
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('💰 Informações do Investimento', 20, 30);
-            
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            
-            pdf.setFillColor(243, 244, 246);
-            pdf.roundedRect(20, 45, 170, 25, 3, 3, 'F');
-            pdf.text('Valor Total do Equipamento:', 30, 58);
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(10);
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Faturamento Mensal:', 30, 108);
             pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('R$ 229.900,00', 30, 67);
+            pdf.setFont('helvetica', 'bold');
+            pdf.setTextColor(199, 169, 126);
+            pdf.text(formatarMoeda(faturamento.mensal), 30, 117);
             
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFillColor(243, 244, 246);
-            pdf.roundedRect(20, 75, 170, 25, 3, 3, 'F');
-            pdf.text('Entrada:', 30, 88);
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(10);
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Faturamento Anual:', 30, 132);
             pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('R$ 10.000,00', 30, 97);
+            pdf.setFont('helvetica', 'bold');
+            pdf.setTextColor(199, 169, 126);
+            pdf.text(formatarMoeda(faturamento.anual), 30, 141);
             
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFillColor(243, 244, 246);
-            pdf.roundedRect(20, 105, 170, 25, 3, 3, 'F');
-            pdf.text('Saldo em 36x sem juros:', 30, 118);
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(10);
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Lucro Liquido Mensal:', 30, 156);
             pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('R$ 6.108,00/mês', 30, 127);
-            
-            // Destaque lucro
-            pdf.setFillColor(220, 252, 231);
-            pdf.roundedRect(20, 140, 170, 30, 3, 3, 'F');
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.setTextColor(22, 101, 52);
-            pdf.text('💚 Lucro Líquido Mensal (após parcela):', 30, 155);
-            pdf.setFontSize(20);
-            pdf.setFont(undefined, 'bold');
+            pdf.setFont('helvetica', 'bold');
+            pdf.setTextColor(199, 169, 126);
             pdf.text(formatarMoeda(faturamento.roi.lucroMensal), 30, 165);
             
-            // Condição de lançamento
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFillColor(239, 68, 68);
-            pdf.roundedRect(20, 180, 170, 40, 5, 5, 'F');
-            pdf.setFontSize(14);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('⚡ CONDIÇÃO ESPECIAL DE LANÇAMENTO', 105, 195, { align: 'center' });
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Válida apenas até 26/10/2024', 105, 205, { align: 'center' });
-            pdf.text('Após esta data, condições normais serão aplicadas', 105, 213, { align: 'center' });
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(10);
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('ROI (Retorno):', 120, 108);
+            pdf.setFontSize(22);
+            pdf.setFont('times', 'bold');
+            pdf.text(roiMeses + ' meses', 120, 120);
             
-            // Página 4 - Cronograma ROI
+            // Análise
+            pdf.setFontSize(10);
+            pdf.setFont('helvetica', 'bold');
+            pdf.text('ANALISE:', 20, 195);
+            pdf.setFont('helvetica', 'normal');
+            const periodo = roiMeses <= 12 ? '1 ano' : Math.ceil(roiMeses/12) + ' anos';
+            const analise = 'Com base na sua simulacao, seu investimento se paga em menos de ' + periodo + ', gerando um lucro liquido superior a ' + formatarMoeda(faturamento.roi.lucroMensal * 12) + ' no primeiro ano.';
+            const splitAnalise = pdf.splitTextToSize(analise, 170);
+            pdf.text(splitAnalise, 20, 203);
+            
+            // Página 3 - Continue com páginas adicionais simplificadas
             pdf.addPage();
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('📈 Cronograma de Retorno', 20, 30);
+            pdf.setTextColor(62, 44, 37);
+            pdf.setFontSize(22);
+            pdf.setFont('times', 'bold');
+            pdf.text('INFORMACOES DO INVESTIMENTO', 20, 30);
             
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Linha do tempo do seu investimento:', 20, 45);
+            pdf.setDrawColor(199, 169, 126);
+            pdf.setLineWidth(2);
+            pdf.line(20, 35, 100, 35);
             
-            // Marcos financeiros
-            const lucroMensal = faturamento.roi.lucroMensal;
-            const marcos = [
-                { mes: Math.ceil(roiMeses * 0.5), desc: '50% recuperado', valor: investimento.total * 0.5 },
-                { mes: roiMeses, desc: '100% recuperado', valor: investimento.total },
-                { mes: 12, desc: 'Lucro acumulado', valor: lucroMensal * 12 - investimento.total },
-                { mes: 24, desc: 'Lucro ano 2', valor: lucroMensal * 12 },
-                { mes: 36, desc: 'Lucro ano 3', valor: lucroMensal * 12 }
-            ];
-            
-            let yPos = 60;
-            marcos.forEach((marco, index) => {
-                pdf.setFillColor(index === 1 ? 220 : 243, index === 1 ? 252 : 244, index === 1 ? 231 : 246);
-                pdf.roundedRect(20, yPos, 170, 20, 2, 2, 'F');
-                pdf.setFontSize(11);
-                pdf.setFont(undefined, 'bold');
-                pdf.text(`✅ Mês ${marco.mes}: ${marco.desc}`, 30, yPos + 8);
-                pdf.setFont(undefined, 'normal');
-                pdf.text(formatarMoeda(marco.valor), 30, yPos + 16);
-                yPos += 25;
-            });
-            
-            // Total 36 meses
-            pdf.setFillColor(139, 92, 246);
-            pdf.roundedRect(20, yPos + 10, 170, 30, 5, 5, 'F');
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFontSize(14);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('💎 Total Acumulado em 36 meses:', 30, yPos + 23);
-            pdf.setFontSize(18);
-            const totalAcumulado = (lucroMensal * 36) - investimento.total;
-            pdf.text(formatarMoeda(totalAcumulado), 30, yPos + 35);
-            
-            // Página 5 - Detalhamento
-            pdf.addPage();
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('📊 Breakdown Completo', 20, 30);
-            
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Distribuição de procedimentos e faturamento:', 20, 45);
-            
-            // Facial
-            pdf.setFillColor(243, 232, 255);
-            pdf.roundedRect(20, 55, 170, 30, 3, 3, 'F');
             pdf.setFontSize(11);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`🎨 Facial Completo e Similares (${state.mixProcedimentos.faceSublime}%)`, 30, 68);
-            pdf.setFont(undefined, 'normal');
-            const faceQtd = Math.round((state.procedimentosMes * state.mixProcedimentos.faceSublime) / 100);
-            pdf.text(`• ${faceQtd} procedimentos/mês`, 30, 76);
-            pdf.text(`• Ticket médio: ${formatarMoeda(precos[state.categoria])}`, 30, 82);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`• Subtotal: ${formatarMoeda(faturamento.porTipo.faceSublime)}/mês`, 100, 76);
-            pdf.text(`• Anual: ${formatarMoeda(faturamento.porTipo.faceSublime * 12)}`, 100, 82);
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Valor Total: R$ 229.900,00', 20, 55);
+            pdf.text('Entrada: R$ 10.000,00', 20, 65);
+            pdf.text('36x de R$ 6.108,00 sem juros', 20, 75);
             
-            // Cirúrgicos
-            pdf.setFillColor(219, 234, 254);
-            pdf.roundedRect(20, 90, 170, 30, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`🔹 Procedimentos Cirúrgicos (${state.mixProcedimentos.cirurgicos}%)`, 30, 103);
-            pdf.setFont(undefined, 'normal');
-            const cirurQtd = Math.round((state.procedimentosMes * state.mixProcedimentos.cirurgicos) / 100);
-            pdf.text(`• ${cirurQtd} procedimentos/mês`, 30, 111);
-            pdf.text(`• Ticket médio: ${formatarMoeda(preciosMedios.cirurgicos[state.categoria])}`, 30, 117);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`• Subtotal: ${formatarMoeda(faturamento.porTipo.cirurgicos)}/mês`, 100, 111);
-            pdf.text(`• Anual: ${formatarMoeda(faturamento.porTipo.cirurgicos * 12)}`, 100, 117);
+            pdf.setFontSize(14);
+            pdf.setFont('helvetica', 'bold');
+            pdf.text('Lucro Mensal: ' + formatarMoeda(faturamento.roi.lucroMensal), 20, 95);
             
-            // Outros
-            pdf.setFillColor(220, 252, 231);
-            pdf.roundedRect(20, 125, 170, 30, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`✨ Outros Procedimentos (${state.mixProcedimentos.outros}%)`, 30, 138);
-            pdf.setFont(undefined, 'normal');
-            const outrosQtd = Math.round((state.procedimentosMes * state.mixProcedimentos.outros) / 100);
-            pdf.text(`• ${outrosQtd} procedimentos/mês`, 30, 146);
-            pdf.text(`• Ticket médio: ${formatarMoeda(preciosMedios.outros[state.categoria])}`, 30, 152);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`• Subtotal: ${formatarMoeda(faturamento.porTipo.outros)}/mês`, 100, 146);
-            pdf.text(`• Anual: ${formatarMoeda(faturamento.porTipo.outros * 12)}`, 100, 152);
-            
-            // Insight
-            pdf.setFillColor(254, 249, 195);
-            pdf.roundedRect(20, 165, 170, 25, 3, 3, 'F');
-            pdf.setFontSize(11);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('💡 Insight:', 30, 178);
-            pdf.text(`Aumentando apenas 5 procedimentos/mês, você pode`, 30, 185);
-            pdf.text(`reduzir seu ROI significativamente.`, 30, 192);
-            
-            // Página 6 - Plano de Ação 90 dias
-            pdf.addPage();
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🎯 Plano de Ação - Primeiros 90 Dias', 20, 30);
-            
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            
-            // Mês 1
-            pdf.setFillColor(239, 246, 255);
-            pdf.roundedRect(20, 45, 170, 45, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.text('📅 Mês 1: Preparação', 30, 58);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            pdf.text('✅ Treinamento completo da equipe (incluído)', 30, 66);
-            pdf.text('✅ Definição de protocolos clínicos', 30, 72);
-            pdf.text('✅ Estratégia de marketing para divulgação', 30, 78);
-            pdf.text('✅ Precificação e posicionamento', 30, 84);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🎯 Meta: 10 procedimentos', 120, 84);
-            
-            // Mês 2
-            pdf.setFillColor(243, 232, 255);
-            pdf.roundedRect(20, 95, 170, 45, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.setFontSize(12);
-            pdf.text('📅 Mês 2: Aceleração', 30, 108);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            pdf.text('✅ Ajuste fino dos procedimentos', 30, 116);
-            pdf.text('✅ Captação de cases antes/depois', 30, 122);
-            pdf.text('✅ Programas de fidelização', 30, 128);
-            pdf.text('✅ Análise de resultados iniciais', 30, 134);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🎯 Meta: 15 procedimentos', 120, 134);
-            
-            // Mês 3
-            pdf.setFillColor(220, 252, 231);
-            pdf.roundedRect(20, 145, 170, 45, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.setFontSize(12);
-            pdf.text('📅 Mês 3: Escala', 30, 158);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            pdf.text('✅ Otimização da agenda', 30, 166);
-            pdf.text('✅ Estratégias de upsell e cross-sell', 30, 172);
-            pdf.text('✅ Parcerias estratégicas', 30, 178);
-            pdf.text('✅ Ampliação do mix de procedimentos', 30, 184);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🎯 Meta: 20+ procedimentos', 120, 184);
-            
-            // Página 7 - Diferenciais
-            pdf.addPage();
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('💎 Por Que Reversi?', 20, 30);
-            
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            
-            // Tecnologia
-            pdf.setFillColor(243, 232, 255);
-            pdf.roundedRect(20, 45, 170, 40, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🔬 Tecnologia Exclusiva:', 30, 58);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            pdf.text('• Microcoring - único no Brasil', 30, 66);
-            pdf.text('• Resultados superiores comprovados', 30, 72);
-            pdf.text('• Menor downtime para pacientes', 30, 78);
-            
-            // Vantagens Comerciais
-            pdf.setFillColor(220, 252, 231);
-            pdf.roundedRect(20, 90, 170, 40, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.setFontSize(12);
-            pdf.text('💼 Vantagens Comerciais:', 30, 103);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            pdf.text('• Procedimentos de alto ticket', 30, 111);
-            pdf.text('• Baixa concorrência (pioneirismo)', 30, 117);
-            pdf.text('• Diferenciação imediata no mercado', 30, 123);
-            
-            // Suporte
-            pdf.setFillColor(219, 234, 254);
-            pdf.roundedRect(20, 135, 170, 40, 3, 3, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.setFontSize(12);
-            pdf.text('👥 Suporte Completo:', 30, 148);
-            pdf.setFont(undefined, 'normal');
-            pdf.setFontSize(10);
-            pdf.text('• Treinamento incluído', 30, 156);
-            pdf.text('• Suporte técnico contínuo', 30, 162);
-            pdf.text('• Comunidade de usuários Reversi', 30, 168);
-            
-            // Página 8 - Próximos Passos
-            pdf.addPage();
-            pdf.setTextColor(0, 0, 0);
-            pdf.setFontSize(24);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🚀 Próximos Passos', 20, 30);
-            
+            pdf.setFillColor(199, 169, 126);
+            pdf.rect(20, 110, 170, 25, 'F');
+            pdf.setTextColor(62, 44, 37);
             pdf.setFontSize(13);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Como garantir sua condição de lançamento:', 20, 50);
+            pdf.text('CONDICAO ESPECIAL DE LANCAMENTO', 105, 120, { align: 'center' });
+            pdf.setFontSize(11);
+            pdf.text('Valida ate 24/10/2025', 105, 128, { align: 'center' });
             
-            // Opções de contato
-            pdf.setFillColor(220, 252, 231);
-            pdf.roundedRect(20, 60, 170, 30, 5, 5, 'F');
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('📞 Opção 1: Falar com Consultor', 30, 73);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('WhatsApp: (62) 98316-0209', 30, 81);
-            pdf.text('Email: vendasrennovari7@gmail.com', 30, 87);
-            
-            pdf.setFillColor(219, 234, 254);
-            pdf.roundedRect(20, 95, 170, 20, 5, 5, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.text('🔍 Opção 2: Agendar Demonstração Presencial', 30, 108);
-            
-            pdf.setFillColor(254, 249, 195);
-            pdf.roundedRect(20, 120, 170, 20, 5, 5, 'F');
-            pdf.setFont(undefined, 'bold');
-            pdf.text('💬 Opção 3: Tirar Suas Dúvidas', 30, 133);
-            
-            // Urgência final
-            pdf.setFillColor(239, 68, 68);
-            pdf.roundedRect(20, 155, 170, 35, 5, 5, 'F');
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('⏰ LEMBRE-SE:', 105, 168, { align: 'center' });
-            pdf.setFontSize(14);
-            pdf.text('Condição especial válida até 26/10/2024', 105, 180, { align: 'center' });
-            
-            // Página 9 - Contracapa
+            // Página final
             pdf.addPage();
-            pdf.setFillColor(139, 92, 246);
+            pdf.setFillColor(62, 44, 37);
             pdf.rect(0, 0, 210, 297, 'F');
             
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFontSize(22);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('📊 Seu Resumo em Números', 105, 80, { align: 'center' });
+            pdf.setTextColor(243, 226, 210);
+            pdf.setFontSize(20);
+            pdf.setFont('times', 'bold');
+            pdf.text('SEU RESUMO EM NUMEROS', 105, 80, { align: 'center' });
             
             pdf.setFontSize(14);
-            pdf.setFont(undefined, 'normal');
+            pdf.setFont('helvetica', 'normal');
+            pdf.text('Investimento: R$ 229.900', 105, 110, { align: 'center' });
+            pdf.setTextColor(199, 169, 126);
+            pdf.setFontSize(16);
+            pdf.text('Faturamento Ano 1: ' + formatarMoeda(faturamento.anual), 105, 130, { align: 'center' });
+            pdf.text('ROI: ' + roiMeses + ' meses', 105, 150, { align: 'center' });
             
-            const resumoY = 110;
-            const espacamento = 20;
-            
-            pdf.text('Investimento:', 105, resumoY, { align: 'center' });
-            pdf.setFontSize(20);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('R$ 229.900', 105, resumoY + 8, { align: 'center' });
-            
-            pdf.setFontSize(14);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Faturamento Ano 1:', 105, resumoY + espacamento + 10, { align: 'center' });
-            pdf.setFontSize(20);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(formatarMoeda(faturamento.anual), 105, resumoY + espacamento + 18, { align: 'center' });
-            
-            pdf.setFontSize(14);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('ROI:', 105, resumoY + (espacamento * 2) + 20, { align: 'center' });
-            pdf.setFontSize(20);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(`${roiMeses} meses`, 105, resumoY + (espacamento * 2) + 28, { align: 'center' });
-            
-            pdf.setFontSize(14);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Lucro Estimado 3 Anos:', 105, resumoY + (espacamento * 3) + 30, { align: 'center' });
-            pdf.setFontSize(20);
-            pdf.setFont(undefined, 'bold');
-            pdf.text(formatarMoeda(totalAcumulado), 105, resumoY + (espacamento * 3) + 38, { align: 'center' });
-            
-            // Footer
-            pdf.setFontSize(12);
-            pdf.setFont(undefined, 'normal');
-            pdf.text('Reversi - Fismatek', 105, 250, { align: 'center' });
-            pdf.text('www.fismatek.com', 105, 258, { align: 'center' });
-            pdf.text('(62) 98316-0209', 105, 266, { align: 'center' });
+            pdf.setTextColor(243, 226, 210);
+            pdf.setFontSize(11);
+            pdf.text('Reversi - Fismatek', 105, 240, { align: 'center' });
+            pdf.text('(62) 98316-0209', 105, 250, { align: 'center' });
             
             // Salvar PDF
-            const nomeArquivo = `Plano_Reversi_${dados.nome.replace(/\s+/g, '_')}.pdf`;
+            const nomeArquivo = 'Plano_Reversi_' + dados.nome.replace(/\s+/g, '_') + '.pdf';
             pdf.save(nomeArquivo);
         }
 
         // Inicializar
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             iniciarContador();
             atualizarResultados();
         });
