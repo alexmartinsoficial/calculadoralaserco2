@@ -69,12 +69,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 20px;
     box-shadow: 0 25px 60px rgba(0,0,0,0.3);
     z-index: 10000;
     text-align: center;
     min-width: 320px;
+    max-width: 90vw;
     display: none;
 }
 
@@ -84,9 +85,17 @@
 }
 
 @keyframes bounceIn {
-    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
-    50% { transform: translate(-50%, -50%) scale(1.05); }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    0% { 
+        transform: translate(-50%, -50%) scale(0.3); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.05); 
+    }
+    100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 1; 
+    }
 }
 
 /* Formulário de Captura */
@@ -94,6 +103,8 @@
     background: linear-gradient(135deg, #8b5cf6, #7c3aed);
     padding: 3rem 2rem;
     margin-top: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(139, 92, 246, 0.3);
 }
 
 .formulario-content {
@@ -107,9 +118,8 @@
     padding: 0.875rem;
     border: 2px solid rgba(255,255,255,0.3);
     border-radius: 10px;
-    margin-bottom: 1rem;
     font-size: 1rem;
-    transition: all 0.2s;
+    transition: all 0.3s;
     background: rgba(255,255,255,0.1);
     color: white;
 }
@@ -122,6 +132,13 @@
     outline: none;
     border-color: white;
     background: rgba(255,255,255,0.2);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+}
+
+/* Checkbox customizado */
+input[type="checkbox"] {
+    cursor: pointer;
+    accent-color: white;
 }
 
 .btn-submit {
@@ -146,6 +163,10 @@
     background: #f3f4f6;
 }
 
+.btn-submit:active {
+    transform: translateY(0);
+}
+
 .beneficios-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -154,13 +175,106 @@
 }
 
 .beneficio-item {
-    background: rgba(255,255,255,0.1);
-    padding: 1rem;
-    border-radius: 10px;
+    background: rgba(255,255,255,0.15);
+    padding: 1.25rem;
+    border-radius: 12px;
     border-left: 4px solid white;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+}
+
+.beneficio-item:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateX(5px);
+}
+
+/* Overlay quando o PDF está sendo gerado */
+.success-message::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    backdrop-filter: blur(4px);
+}
+
+/* Estilo para os sliders */
+input[type="range"] {
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #8b5cf6;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #8b5cf6;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.2);
+}
+
+/* Animação de loading no botão (opcional) */
+.btn-submit.loading {
+    pointer-events: none;
+    opacity: 0.7;
+    position: relative;
+}
+
+.btn-submit.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 3px solid transparent;
+    border-top-color: #7c3aed;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive */
+@media (max-width: 768px) {
+    .formulario-captura {
+        padding: 2rem 1.5rem;
+        margin-top: 2rem;
+        border-radius: 16px;
+    }
+    
+    .formulario-content h2 {
+        font-size: 1.75rem;
+    }
+}
+
 @media (max-width: 640px) {
     .countdown {
         display: flex;
@@ -168,6 +282,12 @@
         justify-content: center;
         margin-top: 0.5rem;
         margin-left: 0;
+        font-size: 0.95rem;
+    }
+    
+    .countdown-item {
+        min-width: 38px;
+        padding: 0.2rem 0.4rem;
     }
     
     .whatsapp-float span {
@@ -177,9 +297,42 @@
     .whatsapp-float {
         padding: 16px;
         border-radius: 50%;
+        bottom: 20px;
+        right: 20px;
     }
     
     .beneficios-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .success-message {
+        padding: 2rem 1.5rem;
+        min-width: 280px;
+    }
+    
+    .form-input {
+        padding: 0.75rem;
+        font-size: 16px; /* Evita zoom no iOS */
+    }
+    
+    .btn-submit {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-urgencia {
+        padding: 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    .formulario-captura {
+        padding: 1.5rem 1rem;
+    }
+    
+    .beneficio-item {
+        padding: 1rem;
     }
 }
