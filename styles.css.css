@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Banner Urgência */
+.banner-urgencia {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.countdown {
+    display: inline-flex;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    font-size: 1.1rem;
+}
+
+.countdown-item {
+    background: rgba(255,255,255,0.2);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    min-width: 45px;
+    display: inline-block;
+}
+
+/* WhatsApp Float */
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #25D366;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 9998;
+    transition: all 0.3s;
+    font-size: 1rem;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.08) translateY(-3px);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-icon {
+    width: 26px;
+    height: 26px;
+}
+
+/* Success Message */
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+    z-index: 10000;
+    text-align: center;
+    min-width: 320px;
+    display: none;
+}
+
+.success-message.show {
+    display: block;
+    animation: bounceIn 0.5s ease-out;
+}
+
+@keyframes bounceIn {
+    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+/* Formulário de Captura */
+.formulario-captura {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    padding: 3rem 2rem;
+    margin-top: 3rem;
+}
+
+.formulario-content {
+    max-width: 800px;
+    margin: 0 auto;
+    color: white;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.875rem;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    transition: all 0.2s;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.form-input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: white;
+    background: rgba(255,255,255,0.2);
+}
+
+.btn-submit {
+    width: 100%;
+    background: white;
+    color: #7c3aed;
+    padding: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+    background: #f3f4f6;
+}
+
+.beneficios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.beneficio-item {
+    background: rgba(255,255,255,0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    border-left: 4px solid white;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .countdown {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 0.5rem;
+        margin-left: 0;
+    }
+    
+    .whatsapp-float span {
+        display: none;
+    }
+    
+    .whatsapp-float {
+        padding: 16px;
+        border-radius: 50%;
+    }
+    
+    .beneficios-grid {
+        grid-template-columns: 1fr;
+    }
+}
